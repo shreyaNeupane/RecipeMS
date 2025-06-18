@@ -41,10 +41,36 @@ app.get("/recipe", async (req, res) => {
 //single read
 app.get("/recipe/:id", async (req, res) => {
   const id = req.params.id;
-  const recipe = await Recipe.findById(id );
+  const recipe = await Recipe.findById(id);
   res.status(200).json({
     message: "Single recipe fetched sucessfully",
     data: recipe,
+  });
+});
+
+//delete recipe
+app.delete("/recipe/:id", async (req, res) => {
+  const id = req.params.id;
+  const recipe = await Recipe.findByIdAndDelete(id);
+  res.status(200).json({
+    message: "Recipe is deleted",
+  });
+});
+
+//Update recipe
+app.patch("/recipe/:id", async (req, res) => {
+  const id = req.params.id;
+  const { recipeTitle, timeRequired, servings, ingredients, instructions } =
+    req.body;
+  await Recipe.findByIdAndUpdate(id, {
+    recipeTitle,
+    timeRequired,
+    servings,
+    ingredients,
+    instructions,
+  });
+  res.status(200).json({
+    message: "recipe updated  sucessfully",
   });
 });
 

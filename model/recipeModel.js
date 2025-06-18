@@ -4,6 +4,7 @@ const recipeSchema = new mongoose.Schema({
   recipeTitle: {
     type: String,
     unique: true,
+    required : true,
   },
   timeRequired: {
     type: Number,
