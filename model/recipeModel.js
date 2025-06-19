@@ -18,6 +18,9 @@ const recipeSchema = new mongoose.Schema({
   instructions: {
     type: String,
   },
+  image:{
+    type : String,
+  }
 
 });
 // where we perform operation = defining table name and columns

@@ -7,6 +7,9 @@ connectToDatabase();
 // VVI
 app.use(express.json());
 
+const {multer,storage} = require('./middleware/multerConfig')
+const upload = multer({storage : storage})
+
 app.get("/", (req, res) => {
   res.json({
     message: "Sucess",
@@ -14,8 +17,8 @@ app.get("/", (req, res) => {
 });
 
 //creating new recipe
-app.post("/recipe", async (req, res) => {
-  const { recipeTitle, timeRequired, servings, ingredients, instructions } =
+app.post("/recipe",upload.single('image'), async (req, res) => {
+  const { recipeTitle, timeRequired, servings, ingredients, instructions , image } =
     req.body;
   await Recipe.create({
     recipeTitle,
@@ -23,6 +26,7 @@ app.post("/recipe", async (req, res) => {
     servings,
     ingredients,
     instructions,
+    image
   });
   res.json({
     message: "recipe created sucessfully",
